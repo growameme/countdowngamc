@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GAMC COUNTDOWN</title>
+  <link rel="icon" href="https://res.cloudinary.com/durbzbqu3/image/upload/v1749537644/Growameme_slfddv.jpg" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --color-bg-dark: #000000;
+      --color-green: #22c55e;
+      --color-green-dark: #16a34a;
+      --color-text-light: #e6e8eb;
+      --color-card-bg: rgba(255 255 255 / 0.1);
+      --color-shadow-dark: rgba(0, 0, 0, 0.7);
+      --radius: 0.75rem;
+      --spacing-xl: 4rem;
+      --spacing-lg: 3rem;
+      --spacing-md: 2rem;
+      --spacing-sm: 1rem;
+      --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Helvetica, Arial, sans-serif;
+      --transition-fast: 0.3s ease;
+    }
+
+    /* Global Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(135deg, var(--color-green-dark) 0%, var(--color-green) 70%),
+        var(--color-bg-dark);
+      background-blend-mode: overlay;
+      color: var(--color-text-light);
+      font-family: var(--font-family);
+      font-size: 18px;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+      padding: var(--spacing-lg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-size: cover;
+      text-rendering: optimizeLegibility;
+    }
+    h1 {
+      font-weight: 700;
+      font-size: 3rem;
+      margin: 0 0 var(--spacing-md) 0;
+      color: var(--color-text-light);
+      text-align: center;
+      text-shadow: 0 3px 8px rgba(0 0 0 / 0.8);
+    }
+    p {
+      max-width: 600px;
+      color: #a7a9ac;
+      font-weight: 500;
+      font-size: 1.25rem;
+      text-align: center;
+      margin: 0 0 var(--spacing-xl) 0;
+      text-shadow: 0 2px 6px rgba(0 0 0 / 0.5);
+    }
+
+    /* Image container */
+    .image-container {
+      max-width: 300px;
+      margin-bottom: var(--spacing-lg);
+      width: 100%;
+      text-align: center;
+    }
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      box-shadow: 0 6px 20px var(--color-shadow-dark);
+      transition: box-shadow 0.3s ease;
+    }
+    .image-container img:hover,
+    .image-container img:focus {
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      outline: none;
+    }
+
+    /* Countdown container */
+    .countdown {
+      display: flex;
+      gap: var(--spacing-lg);
+      max-width: 800px;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+      background: var(--color-card-bg);
+      padding: var(--spacing-lg);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 30px var(--color-shadow-dark);
+      backdrop-filter: saturate(180%) blur(14px);
+      -webkit-backdrop-filter: saturate(180%) blur(14px);
+      user-select: none;
+    }
+
+    /* Each timer card */
+    .countdown-card {
+      background-color: rgba(255 255 255 / 0.12);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(0 0 0 / 0.6);
+      padding: var(--spacing-md) var(--spacing-lg);
+      min-width: 110px;
+      flex: 1 1 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+      cursor: default;
+    }
+    .countdown-card:hover,
+    .countdown-card:focus-visible {
+      box-shadow: 0 16px 48px rgba(0 0 0 / 0.9);
+      transform: translateY(-6px);
+      outline: none;
+    }
+
+    .countdown-time {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--color-green);
+      line-height: 1;
+      text-shadow:
+        0 0 6px var(--color-green),
+        0 0 10px var(--color-green),
+        0 0 20px var(--color-green);
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: text;
+    }
+    .countdown-label {
+      margin-top: 0.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #a3f5af;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 6px rgba(163, 245, 175, 0.7);
+      user-select: none;
+    }
+
+    /* Countdown buttons container */
+    .buttons-container {
+      margin-top: var(--spacing-xl);
+      display: flex;
+      gap: var(--spacing-lg);
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 420px;
+      width: 100%;
+    }
+
+    /* Countdown button common styles */
+    .countdown-btn {
+      flex: 1 1 180px;
+      background-color: #111827;
+      color: var(--color-text-light);
+      padding: 0.85rem 2.5rem;
+      font-size: 1.125rem;
+      font-weight: 700;
+      border: none;
+      border-radius: var(--radius);
+      cursor: not-allowed;
+      user-select: none;
+      transition: background-color var(--transition-fast), transform 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0 0 0, 0.6);
+      opacity: 0.5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 160px;
+    }
+    .countdown-btn.enabled {
+      cursor: pointer;
+      opacity: 1;
+      background-color: var(--color-green);
+      color: var(--color-bg-dark);
+      box-shadow:
+        0 0 8px var(--color-green),
+        0 0 12px var(--color-green);
+    }
+    .countdown-btn.enabled:hover,
+    .countdown-btn.enabled:focus {
+      background-color: var(--color-green-dark);
+      transform: scale(1.05);
+      outline: none;
+      box-shadow: 0 0 15px var(--color-green-dark);
+    }
+    .countdown-btn.always-enabled {
+      cursor: pointer;
+      opacity: 1;
+      background-color: var(--color-green);
+      color: var(--color-bg-dark);
+      box-shadow:
+        0 0 8px var(--color-green),
+        0 0 12px var(--color-green);
+    }
+    .countdown-btn.always-enabled:hover,
+    .countdown-btn.always-enabled:focus {
+      background-color: var(--color-green-dark);
+      transform: scale(1.05);
+      outline: none;
+      box-shadow: 0 0 15px var(--color-green-dark);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.25rem;
+      }
+      p {
+        font-size: 1.1rem;
+      }
+      .countdown {
+        gap: var(--spacing-md);
+        padding: var(--spacing-md);
+      }
+      .countdown-card {
+        min-width: 90px;
+        padding: var(--spacing-sm) var(--spacing-md);
+      }
+      .countdown-time {
+        font-size: 2.5rem;
+      }
+      .countdown-label {
+        font-size: 0.875rem;
+      }
+      .image-container {
+        max-width: 100%;
+        margin-bottom: var(--spacing-md);
+      }
+      .buttons-container {
+        flex-direction: column;
+        gap: var(--spacing-md);
+      }
+      .countdown-btn {
+        min-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Grow A Meme🚀</h1>
+  <p>Get ready to buy and see this token fly to the moon 🚀</p>
+
+  <div class="image-container" role="img" aria-label="Festive New Year countdown illustration">
+    <img src="https://res.cloudinary.com/durbzbqu3/image/upload/v1749537644/Growameme_slfddv.jpg" alt="Grow A Meme" />
+  </div>
+
+  <section
+    class="countdown"
+    role="region"
+    aria-live="polite"
+    aria-label="Countdown timer to New Year 2025"
+  >
+    <div class="countdown-card" tabindex="0" aria-label="Days">
+      <div class="countdown-time" id="days">00</div>
+      <div class="countdown-label">Days</div>
+    </div>
+    <div class="countdown-card" tabindex="0" aria-label="Hours">
+      <div class="countdown-time" id="hours">00</div>
+      <div class="countdown-label">Hours</div>
+    </div>
+    <div class="countdown-card" tabindex="0" aria-label="Minutes">
+      <div class="countdown-time" id="minutes">00</div>
+      <div class="countdown-label">Minutes</div>
+    </div>
+    <div class="countdown-card" tabindex="0" aria-label="Seconds">
+      <div class="countdown-time" id="seconds">00</div>
+      <div class="countdown-label">Seconds</div>
+    </div>
+  </section>
+
+  <div class="buttons-container">
+    <button class="countdown-btn" id="action-button" disabled aria-disabled="true" aria-label="Special action available when countdown ends">
+      Buy Now
+    </button>
+    <button class="countdown-btn always-enabled" id="always-enabled-btn" aria-label="Always clickable button">
+      Road Map
+    </button>
+  </div>
+
+  <script>
+    // Target date: Jan 1, 2025 UTC midnight
+    const targetDate = new Date('2025-06-10T13:00:00Z').getTime();
+
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    const actionBtn = document.getElementById('action-button');
+    const alwaysEnabledBtn = document.getElementById('always-enabled-btn');
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        // Countdown ended
+        daysEl.textContent = '00';
+        hoursEl.textContent = '00';
+        minutesEl.textContent = '00';
+        secondsEl.textContent = '00';
+        enableButton();
+        clearInterval(interval);
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      daysEl.textContent = days.toString().padStart(2, '0');
+      hoursEl.textContent = hours.toString().padStart(2, '0');
+      minutesEl.textContent = minutes.toString().padStart(2, '0');
+      secondsEl.textContent = seconds.toString().padStart(2, '0');
+    }
+
+    function enableButton() {
+      actionBtn.disabled = false;
+      actionBtn.setAttribute('aria-disabled', 'false');
+      actionBtn.classList.add('enabled');
+      actionBtn.focus();
+    }
+
+    actionBtn.addEventListener('click', () => {
+      if (!actionBtn.disabled) {
+        window.location.href = 'https://example.com'; // Replace with your target URL
+      }
+    });
+
+    alwaysEnabledBtn.addEventListener('click', () => {
+      window.location.href = 'https://example.com';
+    });
+
+    updateCountdown(); // Initial call immediately
+    const interval = setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
